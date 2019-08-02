@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using Base.Common.Tools;
+﻿using Base.Common.Tools;
 using Base.Domain;
 using Base.Domain.Enum;
 using Base.Repository.Core;
 using Dapper;
 using DapperExtensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 
 namespace Base.Repository
 {
     /// <summary>
     /// 单表模型的曾删改查 处理
     /// </summary>
-    public sealed class RepoBase: Singleton<RepoBase>
+    public sealed class RepoBase : Singleton<RepoBase>
     {
         public long BulkInsert<T>(IEnumerable<T> entitys, string primaryKey, EnumDBType? dbType = null) where T : EntityBase
         {
@@ -46,7 +46,7 @@ namespace Base.Repository
                 {
                     object o = Ts.GetProperty(item).GetValue(entity, null);
                     if (o == null)
-                    { 
+                    {
                         sb.Append("null");
                     }
                     else if (o is string || o is DateTime || o is Guid)
@@ -113,6 +113,17 @@ namespace Base.Repository
             Type Ts = typeof(T);
             var sql = $"select * from {Ts.Name.Replace("Entity", "")} where {SqlExpress.Instance.GetSql(predicate)}";
             return client.Query<T>(sql);
+        }
+
+        public IEnumerable<TDto> GetWhere<T, TDto>(Expression<Func<T, bool>> predicate, EnumDBType? dbType = null)
+            where T : EntityBase
+            where TDto : class
+        {
+            var client = DBProxy.CreateClient(dbType);
+            // 拼接sql的方式批量插入
+            Type Ts = typeof(T);
+            var sql = $"select * from {Ts.Name.Replace("Entity", "")} where {SqlExpress.Instance.GetSql(predicate)}";
+            return client.Query<TDto>(sql);
         }
 
         #region 辅助方法

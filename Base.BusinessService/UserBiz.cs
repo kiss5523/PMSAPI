@@ -39,7 +39,8 @@ namespace Base.BusinessService
 
         public SingleApiResponse Get(UserInfoGetRequest req)
         {
-            var result = UserRepo.GetModelByUserName<UserDto>(req);
+            //var result = UserRepo.GetModelByUserName<UserDto>(req);
+            var result = RepoBase.Instance.GetWhere<SS_USER, UserDto>(x => x.U_ID == req.U_ID.Value).FirstOrDefault();
 
             return new SingleApiResponse() { Data = result };
         }

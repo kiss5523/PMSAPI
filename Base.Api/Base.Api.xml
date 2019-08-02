@@ -4,20 +4,6 @@
         <name>Base.Api</name>
     </assembly>
     <members>
-        <member name="M:Base.Api.AuthHelper.OverWrite.JwtHelper.IssueJWT(Base.Common.Token.TokenModelJwt)">
-            <summary>
-            颁发JWT字符串
-            </summary>
-            <param name="tokenModel"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Base.Api.AuthHelper.OverWrite.JwtHelper.SerializeJwt(System.String)">
-            <summary>
-            解析
-            </summary>
-            <param name="jwtStr"></param>
-            <returns></returns>
-        </member>
         <member name="T:Base.Api.AuthHelper.OverWrite.JwtTokenAuth">
             <summary>
             中间件
@@ -106,6 +92,20 @@
             <param name="audience">订阅人</param>
             <param name="signingCredentials">签名验证实体</param>
             <param name="expiration">过期时间</param>
+        </member>
+        <member name="M:Base.Api.Controllers.UserController.Login(Base.SDK.Request.User.UserLoginRequest)">
+            <summary>
+            获取单个
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.UserController.Get(Base.SDK.Request.User.UserInfoGetRequest)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
         </member>
         <member name="M:Base.Api.Controllers.ValuesController.Login(Base.SDK.Request.Test.TestLoginRequest)">
             <summary>

@@ -10,7 +10,7 @@ namespace Base.Repository
 {
     internal class DBProxy
     {
-        internal static IDbConnection CreateClient(EnumDBType? dbType)
+        internal static IDbConnection CreateClient(EnumDBType? dbType=null)
         {
             var connString = Appsettings.app($"{dbType ?? EnumDBType.Japan}ConnectString");
             return new SqlConnection(connString);

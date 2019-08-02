@@ -1,4 +1,4 @@
-# BaseFrameworkCore
+# PMSAPI
 #项目介绍<br> 
 这是一个基于.Net Core设计的基础框架，只是后端框架。<br> 
 使用了AutoFac做依赖注入，接口化编程更易于扩展。<br> 

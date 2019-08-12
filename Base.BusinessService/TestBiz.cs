@@ -19,9 +19,9 @@ namespace Base.BusinessService
         public List<PermissionItem> GetRoleModule()
         {
             List<PermissionItem> list = new List<PermissionItem>();
-            list.Add(new PermissionItem() { UserId = 1, LinkUrl = "/api/values/get" });
-            list.Add(new PermissionItem() { UserId = 1, LinkUrl = "/api/values/getlist" });
-            list.Add(new PermissionItem() { UserId = 2, LinkUrl = "/api/values/get" });
+            list.Add(new PermissionItem() { UserId = 10000, LinkUrl = "/api/user/get" });
+            list.Add(new PermissionItem() { UserId = 10000, LinkUrl = "/api/values/getlist" });
+            list.Add(new PermissionItem() { UserId = 20000, LinkUrl = "/api/values/get" });
             return list;
         }
 
@@ -55,7 +55,7 @@ namespace Base.BusinessService
 
         public SingleApiResponse Delete(TestSaveRequest req)
         {
-            throw new Exception("xxx");
+            //throw new Exception("xxx");
             var result = RepoBase.Instance.GetWhere<SysUserInfoes>(x => x.UID == req.UID).ToList().FirstOrDefault();
             if (result == null) return new SingleApiResponse() { BizErrorMsg = "不包含此用户" };
 

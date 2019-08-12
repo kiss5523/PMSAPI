@@ -23,5 +23,26 @@ namespace Base.Repository.Repo
             }
             return client.Query<T>(sql.ToString(), param).FirstOrDefault();
         }
+
+        public IEnumerable<T> GetList<T>(UserInfoGetListRequest req) where T : class
+        {
+            var client = DBProxy.CreateClient();
+            var sql = new StringBuilder(@"SELECT * FROM SS_USER su WHERE 1=1 ");
+            var param = new DynamicParameters();
+
+            if (!string.IsNullOrEmpty(req.U_NAME))
+            {
+                sql.Append(" AND su.U_NAME LIKE @U_NAME");
+                param.Add("@U_NAME", $"%{req.U_NAME}%");
+            }
+
+            if (!string.IsNullOrEmpty(req.U_NAME))
+            {
+                sql.Append(" AND su.U_REALNAME LIKE @U_REALNAME");
+                param.Add("@U_REALNAME", $"%{req.U_REALNAME}%");
+            }
+
+            return client.Query<T>(sql.ToString(), param);
+        }
     }
 }

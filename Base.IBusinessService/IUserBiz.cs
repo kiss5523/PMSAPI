@@ -11,5 +11,11 @@ namespace Base.IBusinessService
         SingleApiResponse Login( UserLoginRequest req);
 
         SingleApiResponse Get(UserInfoGetRequest req);
+
+        SingleApiResponse GetList(UserInfoGetListRequest req);
+
+        SingleApiResponse Save( UserInfoSaveRequest req);
+
+        SingleApiResponse SetDisable(UserSetDisableRequest req);
     }
 }

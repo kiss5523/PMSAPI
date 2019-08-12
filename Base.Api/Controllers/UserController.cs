@@ -19,7 +19,7 @@ namespace Base.Api.Controllers
         public IUserBiz UserBiz { get; set; }
 
         /// <summary>
-        /// 获取单个
+        /// 登陆 获取令牌
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
@@ -27,6 +27,7 @@ namespace Base.Api.Controllers
         [AllowAnonymous]//不受授权控制，任何人都可访问
         public SingleApiResponse Login([FromBody]UserLoginRequest req)
         {
+            req.Ip = HttpContext.Connection.RemoteIpAddress.ToString();
             return UserBiz.Login(req);
         }
 
@@ -36,10 +37,46 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("Get")]
-        [Authorize("Permission")]
+        //[Authorize("Permission")]
         public SingleApiResponse Get([FromBody]UserInfoGetRequest req)
         {
             return UserBiz.Get(req);
+        }
+
+        /// <summary>
+        /// 获取用户信息列表
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("GetList")]
+        //[Authorize("Permission")]
+        public SingleApiResponse GetList([FromBody]UserInfoGetListRequest req)
+        {
+            return UserBiz.GetList(req);
+        }
+
+        /// <summary>
+        /// 编辑用户信息
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("Save")]
+        //[Authorize("Permission")]
+        public SingleApiResponse Save([FromBody]UserInfoSaveRequest req)
+        {
+            return UserBiz.Save(req);
+        }
+
+        /// <summary>
+        /// 用户启用
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("SetDisable")]
+        //[Authorize("Permission")]
+        public SingleApiResponse SetDisable([FromBody]UserSetDisableRequest req)
+        {
+            return UserBiz.SetDisable(req);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Base.SDK.Request.User
     {
         public string userName { get; set; }
         public string passWord { get; set; }
+        public string Ip { get; set; }
     }
 }

@@ -26,5 +26,7 @@ namespace Base.SDK.Model.User
         public DateTime U_LASTMODIFYPASSWORDTIME { get; set; }
         public bool U_LOCKSCREEN { get; set; }
         public string U_PHOTO { get; set; }
+        public int[] U_RoleIds { get; set; }
+        public string U_Roles { get; set; }
     }
 }

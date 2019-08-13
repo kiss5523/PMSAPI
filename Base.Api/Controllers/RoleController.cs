@@ -38,5 +38,53 @@ namespace Base.Api.Controllers
         {
             return IRoleBiz.Save(req);
         }
+
+        /// <summary>
+        /// 角色下成员
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("MemberGetList")]
+        //[Authorize("Permission")]
+        public SingleApiResponse MemberGetList([FromBody]MemberGetListRequest req)
+        {
+            return IRoleBiz.MemberGetList(req);
+        }
+
+        /// <summary>
+        /// 不在此角色下的成员
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("OtherMemberGetList")]
+        //[Authorize("Permission")]
+        public SingleApiResponse OtherMemberGetList([FromBody]OtherMemberGetListRequest req)
+        {
+            return IRoleBiz.OtherMemberGetList(req);
+        }
+
+        /// <summary>
+        /// 添加成员到此角色
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("MemberAdd")]
+        //[Authorize("Permission")]
+        public SingleApiResponse MemberAdd([FromBody]MemberAddRequest req)
+        {
+            return IRoleBiz.MemberAdd(req);
+        }
+
+        /// <summary>
+        /// 从此角色删除成员
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("MemberDelete")]
+        //[Authorize("Permission")]
+        public SingleApiResponse MemberDelete([FromBody]MemberDeleteRequest req)
+        {
+            return IRoleBiz.MemberDelete(req);
+        }
     }
 }

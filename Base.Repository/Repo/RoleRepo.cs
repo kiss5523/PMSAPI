@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Cache;
-using System.Text;
-using Base.Repository.Core;
+﻿using Base.Repository.Core;
 using Base.SDK.Request.Role;
 using Base.SDK.Request.User;
 using Dapper;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Base.Repository.Repo
 {
-    public class RoleRepo: RepositoryBase
+    public class RoleRepo : RepositoryBase
     {
         public IEnumerable<T> GetListByUid<T>(UserInfoGetRequest req) where T : class
         {
@@ -19,8 +16,8 @@ namespace Base.Repository.Repo
                   sr.R_ID,
                   sr.R_NAME,
                   sr.R_DESC,
-                 ,sr.Branch_ID
-                 ,sr.R_ORDERID
+                  sr.Branch_ID,
+                  sr.R_ORDERID
                 FROM SS_ROLE sr
                 LEFT JOIN SS_ROLE_USER sru
                   ON sr.R_ID = sru.R_ID
@@ -53,6 +50,26 @@ namespace Base.Repository.Repo
             }
 
             sql.Append(" ORDER BY sr.R_ORDERID");
+            return client.Query<T>(sql.ToString(), param);
+        }
+
+        public IEnumerable<T> MemberGetList<T>(MemberGetListRequest req) where T : class
+        {
+            var client = DBProxy.CreateClient();
+            var sql = new StringBuilder(@"SELECT
+                  *
+                FROM SS_USER su
+                LEFT JOIN SS_ROLE_USER sru
+                  ON su.U_ID = sru.U_ID
+                WHERE 1 = 1 
+                ");
+            var param = new DynamicParameters();
+            if (req.R_ID.HasValue)
+            {
+                sql.Append(" AND sru.R_ID = @R_ID");
+                param.Add("@R_ID", req.R_ID);
+            }
+            
             return client.Query<T>(sql.ToString(), param);
         }
     }

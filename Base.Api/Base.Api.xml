@@ -149,6 +149,34 @@
             <param name="req"></param>
             <returns></returns>
         </member>
+        <member name="M:Base.Api.Controllers.RoleController.MemberGetList(Base.SDK.Request.Role.MemberGetListRequest)">
+            <summary>
+            角色下成员
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.RoleController.OtherMemberGetList(Base.SDK.Request.Role.OtherMemberGetListRequest)">
+            <summary>
+            不在此角色下的成员
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.RoleController.MemberAdd(Base.SDK.Request.Role.MemberAddRequest)">
+            <summary>
+            添加成员到此角色
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.RoleController.MemberDelete(Base.SDK.Request.Role.MemberDeleteRequest)">
+            <summary>
+            从此角色删除成员
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
         <member name="M:Base.Api.Controllers.UserController.Login(Base.SDK.Request.User.UserLoginRequest)">
             <summary>
             登陆 获取令牌

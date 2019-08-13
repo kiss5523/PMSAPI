@@ -11,5 +11,13 @@ namespace Base.IBusinessService
         SingleApiResponse GetList(RoleGetListRequest req);
 
         SingleApiResponse Save(RoleSaveRequest req);
+
+        SingleApiResponse MemberGetList(MemberGetListRequest req);
+
+        SingleApiResponse OtherMemberGetList(OtherMemberGetListRequest req);
+
+        SingleApiResponse MemberAdd(MemberAddRequest req);
+
+        SingleApiResponse MemberDelete(MemberDeleteRequest req);
     }
 }

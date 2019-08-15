@@ -19,5 +19,7 @@ namespace Base.IBusinessService
         SingleApiResponse MemberAdd(MemberAddRequest req);
 
         SingleApiResponse MemberDelete(MemberDeleteRequest req);
+
+        SingleApiResponse Delete(RoleDeleteRequest req);
     }
 }

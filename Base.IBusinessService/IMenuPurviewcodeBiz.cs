@@ -8,7 +8,13 @@ namespace Base.IBusinessService
 {
     public interface IMenuPurviewcodeBiz
     {
-        SingleApiResponse GetList(MenuPurviewcodeGetListRequest req);
+        SingleApiResponse MenuGetList(MenuPurviewcodeGetListRequest req);
+
+        SingleApiResponse RoleGetList(RolePurviewcodeGetListRequest req);
+
+        SingleApiResponse UserGetList(UserPurviewcodeGetListRequest req);
+
+        SingleApiResponse RoleSet(RolePurviewcodeSetRequest req);
 
         SingleApiResponse Save(MenuPurviewcodeSaveRequest req);
     }

@@ -21,78 +21,66 @@ namespace Base.Api.AuthHelper.Policys
         /// services 层注入
         /// </summary>
         private readonly ITestBiz _testBiz=new TestBiz();
-
-        //public PermissionHandler(TestBiz testBiz)
-        //{
-        //    _testBiz = testBiz;
-        //}
+        private readonly IEnumerable<string> whiteList=new List<string>(){ "/api/user/get", "/api/menu/getlist" };
 
 
         // 重载异步处理程序
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
-            // 将最新的角色和接口列表更新
-            var data = _testBiz.GetRoleModule();
-            var list = (from item in data
-                        orderby item.UserId
-                        select new PermissionItem
-                        {
-                            LinkUrl = item.LinkUrl,
-                            UserId = item.UserId,
-                        }).ToList();
-
-            requirement.Permissions = list;
-
-
             //从AuthorizationHandlerContext转成HttpContext，以便取出表头信息
             var httpContext = (context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)?.HttpContext;
             //请求Url
             var questUrl = httpContext.Request.Path.Value.ToLower();
 
+            var currentUserRole = (from item in httpContext.User.Claims
+                where item.Type == requirement.ClaimType
+                select item.Value).FirstOrDefault();
 
-            //权限中是否存在请求的url
-            if (requirement.Permissions.GroupBy(g => g.LinkUrl).Any(w => w.Key?.ToLower() == questUrl))
-            {
-                // 获取当前用户的角色信息
-                var currentUserRole = (from item in httpContext.User.Claims
-                                        where item.Type == requirement.ClaimType
-                                        select item.Value).FirstOrDefault();
-
-                //验证权限
-                if (currentUserRole==null || requirement.Permissions.Where(w => w.LinkUrl.ToLower() == questUrl).All(w => w.UserId != Convert.ToInt32(currentUserRole)) )
-                {
-
-                    context.Fail();
-                    return;
-                }
-            }
-            else
+            //没有带权限
+            if (string.IsNullOrEmpty(currentUserRole))
             {
                 context.Fail();
                 return;
-
             }
 
-            //var xxx = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
-            //var xx1 = httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value;
-            ////判断过期时间
-            //if ((httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null && DateTime.Parse(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now)
-            //{
-            //    context.Succeed(requirement);
-            //}
-            //else
-            //{
-            //    context.Fail();
-            //    return;
-            //}
+            //不在白名单内
+            if (!whiteList.Contains(questUrl))
+            {
+                // 获取当前用户的角色信息
+                
 
-            ////判断没有登录时，是否访问登录的url,并且是Post请求，并且是form表单提交类型，否则为失败
-            //if (!questUrl.Equals(requirement.LoginPath.ToLower(), StringComparison.Ordinal) && (!httpContext.Request.Method.Equals("POST")
-            //   || !httpContext.Request.HasFormContentType))
-            //{
-            //    context.Fail();
-            //    return;
-            //}
+                // 将最新的角色和接口列表更新
+                var data = _testBiz.GetRoleModule();
+                var list = (from item in data
+                    orderby item.UserId
+                    select new PermissionItem
+                    {
+                        LinkUrl = item.LinkUrl,
+                        UserId = item.UserId,
+                    }).ToList();
+
+                requirement.Permissions = list;
+
+                ////权限中是否存在请求的url
+                //if (requirement.Permissions.GroupBy(g => g.LinkUrl).Any(w => w.Key?.ToLower() == questUrl))
+                //{
+
+
+                //    ////验证权限
+                //    //if (currentUserRole==null || requirement.Permissions.Where(w => w.LinkUrl.ToLower() == questUrl).All(w => w.UserId != Convert.ToInt32(currentUserRole)) )
+                //    //{
+
+                //    //    context.Fail();
+                //    //    return;
+                //    //}
+                //}
+                //else
+                //{
+                //    context.Fail();
+                //    return;
+
+                //}
+            }
             context.Succeed(requirement);
         }
     }

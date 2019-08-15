@@ -37,7 +37,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("Get")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse Get([FromBody]UserInfoGetRequest req)
         {
             return UserBiz.Get(req);
@@ -49,7 +49,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("GetList")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse GetList([FromBody]UserInfoGetListRequest req)
         {
             return UserBiz.GetList(req);
@@ -61,7 +61,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("Save")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse Save([FromBody]UserInfoSaveRequest req)
         {
             return UserBiz.Save(req);
@@ -73,7 +73,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("SetDisable")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse SetDisable([FromBody]UserSetDisableRequest req)
         {
             return UserBiz.SetDisable(req);

@@ -24,10 +24,47 @@ namespace Base.Api.Controllers
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        [HttpPost("GetList")]
-        public SingleApiResponse GetList([FromBody]MenuPurviewcodeGetListRequest req)
+        [HttpPost("MenuGetList")]
+        [Authorize("Permission")]
+        public SingleApiResponse MenuGetList([FromBody]MenuPurviewcodeGetListRequest req)
         {
-            return MenuPurviewcodeBiz.GetList(req);
+            return MenuPurviewcodeBiz.MenuGetList(req);
+        }
+
+        /// <summary>
+        /// 获取角色下权益列表
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("RoleGetList")]
+        [Authorize("Permission")]
+        public SingleApiResponse RoleGetList([FromBody]RolePurviewcodeGetListRequest req)
+        {
+            return MenuPurviewcodeBiz.RoleGetList(req);
+        }
+
+        /// <summary>
+        /// 获取用户下权益列表
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("UserGetList")]
+        [Authorize("Permission")]
+        public SingleApiResponse UserGetList([FromBody]UserPurviewcodeGetListRequest req)
+        {
+            return MenuPurviewcodeBiz.UserGetList(req);
+        }
+
+        /// <summary>
+        /// 设置角色下权益列表
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("RoleSet")]
+        [Authorize("Permission")]
+        public SingleApiResponse RoleSet([FromBody]RolePurviewcodeSetRequest req)
+        {
+            return MenuPurviewcodeBiz.RoleSet(req);
         }
 
         /// <summary>
@@ -36,6 +73,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("Save")]
+        [Authorize("Permission")]
         public SingleApiResponse Save([FromBody]MenuPurviewcodeSaveRequest req)
         {
             return MenuPurviewcodeBiz.Save(req);

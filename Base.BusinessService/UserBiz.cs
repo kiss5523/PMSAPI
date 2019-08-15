@@ -28,7 +28,9 @@ namespace Base.BusinessService
                 {
                     if (user.U_PWD == pwd1)
                     {
-                        TokenModelJwt tokenModel = new TokenModelJwt { Uid = user.U_ID, Role = user.U_ID.ToString() };
+                        //TokenModelJwt tokenModel = new TokenModelJwt { Uid = user.U_ID, Role = user.U_ID.ToString() };
+                        var roles = RoleRepo.GetListByUid<SS_ROLE>(new UserInfoGetRequest(){ U_ID =user.U_ID}).Select(x=>x.R_ID);
+                        TokenModelJwt tokenModel = new TokenModelJwt { Uid = user.U_ID, Role = string.Join(",",roles) };
                         var jwtStr = JwtHelper.IssueJWT(tokenModel); //登录，获取到一定规则的 Token 令牌
 
                         #region 更新user
@@ -149,7 +151,7 @@ namespace Base.BusinessService
         private void SetRoles(int uId, int[] roleIds)
         {
             //删除原有权限
-            RoleUserRepo.Delete(uId);
+            RoleUserRepo.Delete(uid:uId);
             //Save新权限
             var newRoles = roleIds.Select(x => new SS_ROLE_USER(){U_ID = uId,R_ID = x}).ToList();
             RepoBase.Instance.BulkInsert(newRoles,"");

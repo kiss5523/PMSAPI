@@ -6,6 +6,7 @@ using Base.SDK.Request.Role;
 using Base.SDK.Response;
 using System;
 using System.Linq;
+using Base.SDK.Model.MenuPurviewCode;
 
 namespace Base.BusinessService
 {
@@ -13,6 +14,8 @@ namespace Base.BusinessService
     {
         private static readonly RoleRepo RoleRepo = new RoleRepo();
         private static readonly RoleUserRepo RoleUserRepo = new RoleUserRepo();
+        private static readonly MenuPurviewcodeRepo MenuPurviewcodeRepo = new MenuPurviewcodeRepo();
+
         public SingleApiResponse GetList(RoleGetListRequest req)
         {
             var result = RoleRepo.GetList<SS_ROLE>(req);
@@ -56,6 +59,17 @@ namespace Base.BusinessService
             {
                 RoleUserRepo.Delete(U_ID, req.R_ID);
             }
+            return new SingleApiResponse();
+        }
+
+        public SingleApiResponse Delete(RoleDeleteRequest req)
+        {
+            if (!req.R_ID.HasValue) return new SingleApiResponse(){BizErrorMsg = "未选择要删除的角色", ErrCode = 1001};
+            var role= RepoBase.Instance.GetWhere<SS_ROLE>(x => x.R_ID == req.R_ID.Value).FirstOrDefault();
+            if(role==null) return new SingleApiResponse() { BizErrorMsg = "没有此角色", ErrCode = 1002 };
+            MenuPurviewcodeRepo.Delete(req.R_ID);
+            RoleUserRepo.Delete(rid:req.R_ID);
+            RepoBase.Instance.Delete(role);
             return new SingleApiResponse();
         }
 

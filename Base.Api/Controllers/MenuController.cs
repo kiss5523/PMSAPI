@@ -23,6 +23,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("GetList")]
+        [Authorize("Permission")]
         public SingleApiResponse GetList([FromBody]MenuGetListRequest req)
         {
             return MenuBiz.MenuGetList(req);
@@ -34,6 +35,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("ChangeSort")]
+        [Authorize("Permission")]
         public SingleApiResponse ChangeSort([FromBody]MenuChangeSortRequest req)
         {
             return MenuBiz.ChangeSort(req);
@@ -45,6 +47,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("Save")]
+        [Authorize("Permission")]
         public SingleApiResponse Save([FromBody]MenuSaveRequest req)
         {
             return MenuBiz.Save(req);
@@ -56,6 +59,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("SetDisable")]
+        [Authorize("Permission")]
         public SingleApiResponse SetDisable([FromBody]MenuSetDisableRequest req)
         {
             return MenuBiz.SetDisable(req);

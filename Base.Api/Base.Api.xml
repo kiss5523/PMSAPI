@@ -121,9 +121,30 @@
             <param name="req"></param>
             <returns></returns>
         </member>
-        <member name="M:Base.Api.Controllers.MenuPurviewcodeController.GetList(Base.SDK.Request.MenuPurviewcode.MenuPurviewcodeGetListRequest)">
+        <member name="M:Base.Api.Controllers.MenuPurviewcodeController.MenuGetList(Base.SDK.Request.MenuPurviewcode.MenuPurviewcodeGetListRequest)">
             <summary>
             获取菜单权益列表
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.MenuPurviewcodeController.RoleGetList(Base.SDK.Request.MenuPurviewcode.RolePurviewcodeGetListRequest)">
+            <summary>
+            获取角色下权益列表
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.MenuPurviewcodeController.UserGetList(Base.SDK.Request.MenuPurviewcode.UserPurviewcodeGetListRequest)">
+            <summary>
+            获取用户下权益列表
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.MenuPurviewcodeController.RoleSet(Base.SDK.Request.MenuPurviewcode.RolePurviewcodeSetRequest)">
+            <summary>
+            设置角色下权益列表
             </summary>
             <param name="req"></param>
             <returns></returns>
@@ -173,6 +194,13 @@
         <member name="M:Base.Api.Controllers.RoleController.MemberDelete(Base.SDK.Request.Role.MemberDeleteRequest)">
             <summary>
             从此角色删除成员
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Base.Api.Controllers.RoleController.Delete(Base.SDK.Request.Role.RoleDeleteRequest)">
+            <summary>
+            删除角色
             </summary>
             <param name="req"></param>
             <returns></returns>

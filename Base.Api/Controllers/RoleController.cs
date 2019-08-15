@@ -6,6 +6,7 @@ using Base.BusinessService;
 using Base.IBusinessService;
 using Base.SDK.Request.Role;
 using Base.SDK.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Base.Api.Controllers
@@ -21,7 +22,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("GetList")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse GetList([FromBody]RoleGetListRequest req)
         {
             return IRoleBiz.GetList(req);
@@ -33,7 +34,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("Save")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse Save([FromBody]RoleSaveRequest req)
         {
             return IRoleBiz.Save(req);
@@ -45,7 +46,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("MemberGetList")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse MemberGetList([FromBody]MemberGetListRequest req)
         {
             return IRoleBiz.MemberGetList(req);
@@ -57,7 +58,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("OtherMemberGetList")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse OtherMemberGetList([FromBody]OtherMemberGetListRequest req)
         {
             return IRoleBiz.OtherMemberGetList(req);
@@ -69,7 +70,7 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("MemberAdd")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse MemberAdd([FromBody]MemberAddRequest req)
         {
             return IRoleBiz.MemberAdd(req);
@@ -81,10 +82,23 @@ namespace Base.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost("MemberDelete")]
-        //[Authorize("Permission")]
+        [Authorize("Permission")]
         public SingleApiResponse MemberDelete([FromBody]MemberDeleteRequest req)
         {
             return IRoleBiz.MemberDelete(req);
         }
+
+        /// <summary>
+        /// 删除角色
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost("Delete")]
+        [Authorize("Permission")]
+        public SingleApiResponse Delete([FromBody]RoleDeleteRequest req)
+        {
+            return IRoleBiz.Delete(req);
+        }
+
     }
 }

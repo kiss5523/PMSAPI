@@ -54,7 +54,7 @@ namespace Base.BusinessService
                 MenuPurviewcodeRepo.Delete(req.R_ID, purvieCode);
             }
 
-            RepoBase.Instance.BulkInsert(addList, "");
+            if(addList.Any()) RepoBase.Instance.BulkInsert(addList, "");
             return new SingleApiResponse();
         }
 

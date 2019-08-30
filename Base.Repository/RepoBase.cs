@@ -79,7 +79,7 @@ namespace Base.Repository
             var dbClient = DBProxy.CreateClient(dbType);
             dbClient.Insert(entitys);
         }
-        public long Add<T>(T entity, EnumDBType? dbType = null) where T : EntityBase
+        public dynamic Add<T>(T entity, EnumDBType? dbType = null) where T : EntityBase
         {
             var dbClient = DBProxy.CreateClient(dbType);
             var identify = dbClient.Insert(entity);

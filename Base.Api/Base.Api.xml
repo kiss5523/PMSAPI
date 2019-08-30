@@ -93,6 +93,13 @@
             <param name="signingCredentials">签名验证实体</param>
             <param name="expiration">过期时间</param>
         </member>
+        <member name="M:Base.Api.Controllers.DocRecordController.UpLoadFile">
+            <summary>
+            文件导入(流)
+            </summary>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
         <member name="M:Base.Api.Controllers.MenuController.GetList(Base.SDK.Request.Menu.MenuGetListRequest)">
             <summary>
             根据权限获取菜单

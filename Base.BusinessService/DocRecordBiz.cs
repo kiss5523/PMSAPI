@@ -17,7 +17,7 @@ namespace Base.BusinessService
         {
             var docId = Guid.NewGuid();
             var url = CosHelper.Instance.UploadFile("rest",
-                 $"{req.DocType}/{DateTime.Now.ToString("yyyyMMdd")}/{docId.ToString().Replace("-", "")}.{req.FileExtension}", req.Bytes);
+                 $"{req.DocType}/{DateTime.Now.ToString("yyyyMMdd")}/{docId.ToString()}.{req.FileExtension}", req.Bytes);
 
             var docRecord = new DocRecord()
             {

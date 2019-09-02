@@ -49,11 +49,19 @@ namespace Base.Common.Cos
             return bucketClient.SelectObject(key, second).Result;
         }
 
-        public void ObjectUrlGetList<T>(IEnumerable<ICosBase> cosBases)where  T:ICosBase
+        public void ObjectUrlGetListOnSign<T>(IEnumerable<ICosBase> cosBases)where  T:ICosBase
         {
             foreach (var cosBase in cosBases)
             {
                 cosBase.CosUrl = ObjectUrlGet(cosBase.CosBuketName, cosBase.CosKey);
+            }
+        }
+
+        public void ObjectUrlGetList<T>(IEnumerable<ICosBase> cosBases) where T : ICosBase
+        {
+            foreach (var cosBase in cosBases)
+            {
+                cosBase.CosUrl = $"https://{cosBase.CosBuketName}-{appId}.cos.{region}.myqcloud.com/{cosBase.CosKey}"; 
             }
         }
     }

@@ -6,6 +6,7 @@ using Base.Common.Cos;
 using Base.Domain.Entitys;
 using Base.IBusinessService;
 using Base.Repository;
+using Base.SDK.Model;
 using Base.SDK.Request.DocRecord;
 using Base.SDK.Response;
 
@@ -16,8 +17,8 @@ namespace Base.BusinessService
         public async Task<SingleApiResponse> UpLoadFile(DocRecordUpLoadFileRequest req)
         {
             var docId = Guid.NewGuid();
-            var url = CosHelper.Instance.UploadFile("rest",
-                 $"{req.DocType}/{DateTime.Now.ToString("yyyyMMdd")}/{docId.ToString()}.{req.FileExtension}", req.Bytes);
+            var cosKey = $"{req.DocType}/{DateTime.Now.ToString("yyyyMMdd")}/{docId.ToString()}.{req.FileExtension}";
+            var url = CosHelper.Instance.UploadFile("rest", cosKey, req.Bytes);
 
             var docRecord = new DocRecord()
             {
@@ -28,13 +29,15 @@ namespace Base.BusinessService
                 DocSource = req.DocSource,
                 FileExtension = req.FileExtension,
                 Memo = "",
-                DocUrl = url,
+                CosBuketName = "rest",
+                CosKey = cosKey,
                 CreatedDate = DateTime.Now
             };
+            RepoBase.Instance.Add(docRecord);
             return new SingleApiResponse()
             {
-                Data = RepoBase.Instance.Add(docRecord)
-        };
+                Data = cosKey
+            };
         }
     }
 }

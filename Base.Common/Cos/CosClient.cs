@@ -9,6 +9,7 @@ using COSXML.Model;
 using COSXML.Model.Bucket;
 using COSXML.Model.Object;
 using COSXML.Model.Service;
+using COSXML.Model.Tag;
 using COSXML.Transfer;
 using COSXML.Utils;
 
@@ -82,6 +83,7 @@ namespace Base.Common.Cos
 
         // 查询存储桶的文件列表
         Task<ResponseModel> SelectObjectList();
+        Task<string> SelectObject(string key, int second);
 
         // 下载文件
         Task<ResponseModel> DownObject(string key, string localDir, string localFileName);
@@ -154,11 +156,13 @@ namespace Base.Common.Cos
         private readonly CosXmlServer _cosXml;
         private readonly string _buketName;
         private readonly string _appid;
-        public BucketClient(CosXmlServer cosXml, string buketName, string appid)
+        private readonly string _region;
+        public BucketClient(CosXmlServer cosXml, string buketName, string appid, string region)
         {
             _cosXml = cosXml;
             _buketName = buketName;
             _appid = appid;
+            _region = region;
         }
         public async Task<ResponseModel> UpFile(string key, string srcPath)
         {
@@ -285,6 +289,37 @@ namespace Base.Common.Cos
                 return new ResponseModel { Code = 0, Data = "CosServerException: " + serverEx.GetInfo() };
             }
         }
+
+        public async Task<string> SelectObject(string key, int second)
+        {
+            try
+            {
+                PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
+                preSignatureStruct.appid = _appid;//腾讯云账号 APPID
+                preSignatureStruct.region = _region; //存储桶地域
+                preSignatureStruct.bucket = _buketName + "-" + _appid; //存储桶
+                preSignatureStruct.key = key; //对象键
+                preSignatureStruct.httpMethod = "GET"; //http 请求方法
+                preSignatureStruct.isHttps = true; //生成 https 请求URL
+                preSignatureStruct.signDurationSecond = second; //请求签名时间为600s
+                preSignatureStruct.headers = null;//签名中需要校验的header
+                preSignatureStruct.queryParameters = null; //签名中需要校验的URL中请求参数
+
+                return _cosXml.GenerateSignURL(preSignatureStruct); //上传预签名 URL (使用临时密钥方式计算的签名 URL )
+
+            }
+            catch (COSXML.CosException.CosClientException clientEx)
+            {
+                //请求失败
+                return null;
+            }
+            catch (COSXML.CosException.CosServerException serverEx)
+            {
+                //请求失败
+                return null;
+            }
+        }
+
         public async Task<ResponseModel> DownObject(string key, string localDir, string localFileName)
         {
             try
